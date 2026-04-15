@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/yipecommerce",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\YipEcommerce\\": "app/",
+            "Modules\\YipEcommerce\\Database\\Factories\\": "database/factories/",
+            "Modules\\YipEcommerce\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\YipEcommerce\\Tests\\": "tests/"
+        }
+    }
+}

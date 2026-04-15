@@ -1,0 +1,11 @@
+{
+    "name": "YipEcommerce",
+    "alias": "yipecommerce",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\YipEcommerce\\Providers\\YipEcommerceServiceProvider"
+    ],
+    "files": []
+}
