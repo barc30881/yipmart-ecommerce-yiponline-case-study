@@ -2,10 +2,9 @@ services:
   - type: web
     name: yipmart
     runtime: docker
-    repo: https://github.com/barc30881/yipmart-ecommerce-yiponline-case-study  # ← Change if your username is different
+    repo: https://github.com/barc30881/yipmart-ecommerce-yiponline-case-study
     plan: free
     branch: main
-    rootDir: .
     dockerfilePath: Dockerfile
     envVars:
       - key: APP_ENV
@@ -13,17 +12,18 @@ services:
       - key: APP_DEBUG
         value: false
       - key: APP_KEY
-        generateValue: true          # Render will auto-generate a secure key
+        generateValue: true
       - key: DB_CONNECTION
         value: sqlite
       - key: SESSION_DRIVER
         value: file
     buildCommand: |
-      composer install --optimize-autoloader --no-dev --no-interaction && 
-      npm install && npm run build && 
-      php artisan config:cache && 
-      php artisan route:cache && 
-      php artisan view:cache && 
-      php artisan module:migrate YipEcommerce --force && 
+      composer install --optimize-autoloader --no-dev --no-interaction &&
+      npm ci --production=false &&
+      npm run build &&
+      php artisan config:cache &&
+      php artisan route:cache &&
+      php artisan view:cache &&
+      php artisan module:migrate YipEcommerce --force &&
       php artisan module:seed YipEcommerce --force
-    startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
+    startCommand: sh -c "php-fpm & nginx -g 'daemon off;'"
