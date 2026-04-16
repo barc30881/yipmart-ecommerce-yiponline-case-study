@@ -1,6 +1,6 @@
 FROM php:8.3-fpm-alpine
 
-# Install system dependencies + Node.js
+# Install system dependencies + Node.js + oniguruma (required for mbstring)
 RUN apk add --no-cache \
     git \
     curl \
@@ -10,6 +10,7 @@ RUN apk add --no-cache \
     unzip \
     nodejs \
     npm \
+    oniguruma-dev \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Install Composer
