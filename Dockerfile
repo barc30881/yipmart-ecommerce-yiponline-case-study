@@ -1,6 +1,6 @@
 FROM php:8.3-fpm-alpine
 
-# Install system dependencies + Node.js + oniguruma (required for mbstring)
+# Install system dependencies + oniguruma for mbstring
 RUN apk add --no-cache \
     git \
     curl \
@@ -20,12 +20,18 @@ WORKDIR /var/www/html
 
 COPY . .
 
+# Create SQLite database directory and file (important for Render)
+RUN mkdir -p database && \
+    touch database/database.sqlite && \
+    chmod 666 database/database.sqlite && \
+    chown -R www-data:www-data database storage bootstrap/cache
+
 # Install dependencies
 RUN composer install --optimize-autoloader --no-dev --no-interaction
 RUN npm ci && npm run build
 
-# Permissions
-RUN chown -R www-data:www-data storage bootstrap/cache
+# Permissions again (just to be sure)
+RUN chown -R www-data:www-data storage bootstrap/cache database
 
 EXPOSE 8080
 
