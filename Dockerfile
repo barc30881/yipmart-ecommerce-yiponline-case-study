@@ -10,7 +10,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 COPY . .
 
-# === CRITICAL: Create .env + DB file + run ALL migrations ===
+# === CRITICAL SETUP: .env + SQLite + ALL migrations + seeds + caches ===
 RUN cp .env.example .env || true && \
     mkdir -p database && \
     touch database/database.sqlite && \
@@ -18,7 +18,7 @@ RUN cp .env.example .env || true && \
     chown -R www-data:www-data database storage bootstrap/cache && \
     composer install --optimize-autoloader --no-dev --no-interaction --no-scripts && \
     php artisan key:generate --force && \
-    php artisan migrate --force && \                  # ← THIS LINE ADDED (core Laravel tables including sessions)
+    php artisan migrate --force && \
     php artisan module:migrate YipEcommerce --force && \
     php artisan module:seed YipEcommerce --force && \
     php artisan config:cache && \
