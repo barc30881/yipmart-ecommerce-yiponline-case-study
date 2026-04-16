@@ -19,11 +19,9 @@ services:
         value: file
     buildCommand: |
       composer install --optimize-autoloader --no-dev --no-interaction &&
-      npm ci --production=false &&
+      npm ci &&
       npm run build &&
       php artisan config:cache &&
       php artisan route:cache &&
-      php artisan view:cache &&
-      php artisan module:migrate YipEcommerce --force &&
-      php artisan module:seed YipEcommerce --force
+      php artisan view:cache
     startCommand: sh -c "php-fpm & nginx -g 'daemon off;'"

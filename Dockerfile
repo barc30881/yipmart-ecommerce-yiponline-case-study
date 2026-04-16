@@ -1,15 +1,17 @@
-FROM php:8.3-fpm
+FROM php:8.3-fpm-alpine
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
+# Install system dependencies + Node.js + npm
+RUN apk add --no-cache \
     git \
     curl \
     libpng-dev \
-    libonig-dev \
     libxml2-dev \
     zip \
     unzip \
     nginx \
+    nodejs \
+    npm \
+    oniguruma-dev \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Install Composer
@@ -28,10 +30,10 @@ RUN composer install --optimize-autoloader --no-dev --no-interaction
 RUN npm install && npm run build
 
 # Nginx configuration
-COPY .docker/nginx.conf /etc/nginx/sites-available/default
+COPY .docker/nginx.conf /etc/nginx/http.d/default.conf
 
 # Permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache
 
 # Expose port
 EXPOSE 8080
