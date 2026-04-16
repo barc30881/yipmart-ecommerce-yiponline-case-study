@@ -20,13 +20,5 @@ services:
     buildCommand: |
       composer install --optimize-autoloader --no-dev --no-interaction &&
       npm ci &&
-      npm run build &&
-      php artisan key:generate --force &&
-      php artisan config:clear &&
-      php artisan route:clear &&
-      php artisan view:clear &&
-      php artisan cache:clear &&
-      mkdir -p database && touch database/database.sqlite && chmod 666 database/database.sqlite &&
-      php artisan module:migrate YipEcommerce --force &&
-      php artisan module:seed YipEcommerce --force
+      npm run build
     startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
