@@ -2,8 +2,10 @@
 
 @section('content')
 
+@auth
 @php
-    $isAdmin = auth()->check() && auth()->user()?->email === 'admin@yiponline.com';
+    $user = auth()->user();
+    $isAdmin = $user?->email === 'admin@yiponline.com';
 @endphp
 
 <div class="flex min-h-[calc(100vh-180px)] flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-50">
@@ -13,12 +15,17 @@
       <span class="text-5xl">🛍️</span>
     </div>
 
+    <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">
+      Welcome back, {{ $user->name ?? 'User' }}!
+    </h2>
+
     @if($isAdmin)
-      <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">
-        Welcome back, Admin!
-      </h2>
       <p class="mt-2 text-gray-600">
         You're successfully logged in to the YipMart Admin Dashboard.
+      </p>
+    @else
+      <p class="mt-2 text-gray-600">
+        You're successfully logged in to your YipMart account.
       </p>
     @endif
   </div>
@@ -41,11 +48,26 @@
           You now have full access to manage orders and the YipMart platform.
         </p>
 
-        <!-- Admin Actions -->
         <div class="space-y-4">
           <a href="/admin/orders"
              class="block w-full py-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition">
             View All Orders
+          </a>
+
+          <a href="{{ route('home') }}"
+             class="block w-full py-4 bg-white border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition">
+            Back to Shop
+          </a>
+        </div>
+      @else
+        <p class="text-gray-600 mb-10">
+          You can continue your shopping.
+        </p>
+
+        <div class="space-y-4">
+          <a href="{{ route('cart.index') }}"
+             class="block w-full py-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition">
+            View Your Cart
           </a>
 
           <a href="{{ route('home') }}"
@@ -58,5 +80,6 @@
     </div>
   </div>
 </div>
+@endauth
 
 @endsection
