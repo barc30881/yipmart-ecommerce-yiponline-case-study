@@ -86,7 +86,7 @@
         <!-- Submit -->
         <div>
           <button type="submit"
-            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            class="flex w-full justify-center rounded-md bg-orange-600 px-3 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             Create account
           </button>
         </div>
@@ -95,7 +95,7 @@
       <div class="mt-8 text-center">
         <p class="text-sm text-gray-600">
           Already have an account? 
-          <a href="{{ route('login') }}" class="font-semibold text-indigo-600 hover:text-indigo-500">
+          <a href="{{ route('login') }}" class="font-semibold text-orange-600 hover:text-indigo-500">
             Sign in here
           </a>
         </p>
